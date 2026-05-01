@@ -1,0 +1,11 @@
+---
+
+- name: Import all CA certificates from Firefox to Citrix  # noqa no-changed-when
+  ansible.builtin.shell:
+    cmd: ln -fs /usr/share/ca-certificates/mozilla/* /opt/Citrix/ICAClient/keystore/cacerts/
+  args:
+    warn: False
+
+- name: Recreate all hashes  # noqa no-changed-when
+  ansible.builtin.command:
+    cmd: /opt/Citrix/ICAClient/util/ctx_rehash

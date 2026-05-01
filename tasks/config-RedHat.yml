@@ -1,0 +1,30 @@
+---
+
+- name: Making sure no /tmp/cacerts exists
+  ansible.builtin.file:
+    path: /tmp/cacerts
+    state: absent
+
+- name: Export all certificates  # noqa no-changed-when
+  ansible.builtin.command:
+    cmd: trust extract /tmp/cacerts --format=pem-directory
+
+- name: Get all certificate names
+  ansible.builtin.find:
+    paths: /tmp/cacerts
+  register: __ca_certs
+
+- name: Copy all certificates to /opt/Citrix/ICAClient/keystore/cacerts
+  ansible.builtin.copy:
+    src: "{{ item.path }}"
+    dest: /opt/Citrix/ICAClient/keystore/cacerts/{{ item.path | basename }}
+    mode: "0644"
+  become: yes
+  loop: "{{ __ca_certs.files }}"
+  loop_control:
+    label: "{{ item.path | basename }}"
+
+- name: Recreate all hashes  # noqa no-changed-when
+  ansible.builtin.command:
+    cmd: /opt/Citrix/ICAClient/util/ctx_rehash
+  become: yes

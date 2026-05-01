@@ -1,0 +1,10 @@
+---
+
+# Citrix Workspace App version
+citrix_version: "26.01.0.150"
+
+# Define location that holds the packages
+citrix_package_path: files
+
+# Install USB support
+citrix_usb_support: false

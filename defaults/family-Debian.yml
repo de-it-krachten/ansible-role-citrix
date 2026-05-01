@@ -1,0 +1,7 @@
+---
+
+# Main package name
+citrix_package_filename: "icaclient_{{ citrix_version }}_amd64.deb"
+
+# USB support package
+citrix_usb_package_filename: "ctxusb_{{ citrix_version }}_amd64.deb"

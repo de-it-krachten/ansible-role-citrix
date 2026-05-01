@@ -1,0 +1,31 @@
+---
+
+- name: Copy package to remote server
+  ansible.builtin.copy:
+    src: "{{ citrix_package_path }}/{{ citrix_package_filename }}"
+    dest: "/tmp/{{ citrix_package_filename }}"
+    mode: "0644"
+  check_mode: no
+
+- name: Install Citrix Workspace App
+  ansible.builtin.dnf:
+    name: /tmp/{{ citrix_package_filename }}
+    disable_gpg_check: yes
+  become: yes
+
+- name: USB Support
+  when: citrix_usb_support | bool
+  block:
+
+    - name: Copy USB package to remote server
+      ansible.builtin.copy:
+        src: "{{ citrix_package_path }}/{{ citrix_usb_package_filename }}"
+        dest: "/tmp/{{ citrix_usb_package_filename }}"
+        mode: "0644"
+      check_mode: no
+
+    - name: Install Citrix Workspace App - USB support
+      ansible.builtin.dnf:
+        name: "/tmp/{{ citrix_usb_package_filename }}"
+        disable_gpg_check: yes
+      become: yes

@@ -1,0 +1,7 @@
+---
+
+# Main package name
+citrix_package_filename: "ICAClient-rhel-{{ citrix_version }}-1.x86_64.rpm"
+
+# USB package name
+citrix_usb_package_filename: "ctxusb-{{ citrix_version }}-1.x86_64.rpm"
