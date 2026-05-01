@@ -1,0 +1,12 @@
+---
+
+- name: Including 'vars.yml'
+  ansible.builtin.include_tasks:
+    file: vars.yml
+
+- name: Install Citrix
+  ansible.builtin.include_tasks:
+    file: "install-{{ ansible_os_family }}.yml"
+
+# - name: Configure Citrix
+#   ansible.builtin.include_tasks: "config-{{ ansible_os_family }}.yml"

@@ -1,0 +1,23 @@
+---
+
+# Generic
+generic:
+  role: ansible-role-citrix
+  role_short: citrix
+  role_description: |
+    Installs Citrix Workspace App on a variety of Linux distributions.<br>
+    
+    - Download the required packages from [link](https://www.citrix.com/downloads/workspace-app/linux/workspace-app-for-linux-latest.html).<br>
+    - Put the packages in a custom directory on the Ansible control node.<br>
+    - Set variable `citrix_package_path` to the package location.<br>
+
+  collections: []
+
+# Github
+github:
+  molecule: false
+
+# Molecule
+molecule:
+  requirements:
+    roles_extra: []
