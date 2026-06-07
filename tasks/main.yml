@@ -6,7 +6,7 @@
 
 - name: Install Citrix
   ansible.builtin.include_tasks:
-    file: "install-{{ ansible_os_family }}.yml"
+    file: "install-{{ ansible_facts.os_family }}.yml"
 
 # - name: Configure Citrix
-#   ansible.builtin.include_tasks: "config-{{ ansible_os_family }}.yml"
+#   ansible.builtin.include_tasks: "config-{{ ansible_facts.os_family }}.yml"
