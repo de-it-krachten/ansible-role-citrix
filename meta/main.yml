@@ -22,8 +22,4 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - jammy
-    - name: Fedora
-      versions:
-        - '42'
-        - '43'
 dependencies: []

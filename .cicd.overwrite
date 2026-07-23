@@ -11,7 +11,14 @@ generic:
     - Put the packages in a custom directory on the Ansible control node.<br>
     - Set variable `citrix_package_path` to the package location.<br>
 
-  collections: []
+# Supported platforms
+platforms:
+  fedora43:
+    supported: false
+    ci: false
+  fedora44:
+    supported: false
+    ci: false
 
 # Github
 github:

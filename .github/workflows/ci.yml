@@ -27,19 +27,40 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: "ansible_2.17"
-            # ansible: "ansible>10,<11"
-            ansible: "ansible-core>2.17,<2.18"
+          - name: "ansible_2.16"
+            # ansible: "ansible>9,<10"
+            ansible: "ansible-core>2.16,<2.17"
             ansible_lint: "ansible-lint"
-            python: "3.13"
-            venv: "ansiblecore217"
+            python: "3.12"
+            venv: "ansiblecore216"
 
           - name: "ansible_2.18"
             # ansible: "ansible>11,<12"
             ansible: "ansible-core>2.18,<2.19"
             ansible_lint: "ansible-lint"
-            python: "3.13"
+            python: "3.12"
             venv: "ansiblecore218"
+
+          - name: "ansible_2.19"
+            # ansible: "ansible>12,<13"
+            ansible: "ansible-core>2.19,<2.20"
+            ansible_lint: "ansible-lint"
+            python: "3.12"
+            venv: "ansiblecore219"
+
+          - name: "ansible_2.20"
+            # ansible: "ansible>13,<14"
+            ansible: "ansible-core>2.20,<2.21"
+            ansible_lint: "ansible-lint"
+            python: "3.12"
+            venv: "ansiblecore220"
+
+          - name: "ansible_2.21"
+            # ansible: "ansible>14,<15"
+            ansible: "ansible-core>2.21,<2.22"
+            ansible_lint: "ansible-lint"
+            python: "3.12"
+            venv: "ansiblecore221"
 
 
     steps:
@@ -151,8 +172,9 @@ jobs:
           set -e
           [[ $(id -un) != root ]] && sudo=sudo
           ansible="${{ matrix.venv }}"
+          python=$(which python3)
           export VENV_LIST="yq e2j2 jinjanator $ansible"
-          /opt/cicd-tools/python/python-setup-venvs.sh --sudo /usr/local/venv
+          /opt/cicd-tools/python/python-setup-venvs.sh --python=$python --sudo /usr/local/venv
 
       - name: Install required galaxy collections
         run: |
@@ -180,4 +202,3 @@ jobs:
           source /usr/local/venv/$ansible/bin/activate
           yamllint .
           /usr/local/bin/ansible-lint.sh -f readable
-
