@@ -1,5 +1,39 @@
 ---
 
+- name: Get package names
+  vars:
+    citrix_package_pattern: 'ICAClient-rhel-*.rpm'
+    citrix_usb_package_pattern: 'ctxusb-*.rpm'
+  when: citrix_version == 'latest'
+  block:
+
+    - name: Find latest file on control node
+      ansible.builtin.find:
+        paths: "{{ citrix_package_path }}"
+        pattern: "{{ citrix_package_pattern }}"
+        file_type: file
+      delegate_to: localhost
+      register: files1
+
+    - name: Find latest file on control node
+      ansible.builtin.find:
+        paths: "{{ citrix_package_path }}"
+        pattern: "{{ citrix_usb_package_pattern }}"
+        file_type: file
+      delegate_to: localhost
+      register: files2
+
+    - name: Save latest citrix package
+      ansible.builtin.set_fact:
+        citrix_package_filename: "{{ (files1.files | sort(attribute='mtime', reverse=true) | first).path | basename }}"
+        citrix_usb_package_filename: "{{ (files2.files | sort(attribute='mtime', reverse=true) | first).path | basename }}"
+
+    - name: Show packages
+      ansible.builtin.debug:
+        msg:
+          citrix_package_filename: "{{ citrix_package_filename }}"
+          citrix_usb_package_filename: "{{ citrix_usb_package_filename }}"
+
 - name: Copy package to remote server
   ansible.builtin.copy:
     src: "{{ citrix_package_path }}/{{ citrix_package_filename }}"
@@ -9,7 +43,7 @@
 
 - name: Install Citrix Workspace App
   ansible.builtin.dnf:
-    name: /tmp/{{ citrix_package_filename }}
+    name: "/tmp/{{ citrix_package_filename }}"
     disable_gpg_check: yes
   become: yes
 
