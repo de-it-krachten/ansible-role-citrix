@@ -1,0 +1,3 @@
+---
+citrix_dependencies:
+  - libasound2t64

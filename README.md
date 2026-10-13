@@ -35,7 +35,6 @@ Supported platforms
 - AlmaLinux 8
 - AlmaLinux 9
 - AlmaLinux 10
-- Debian 11 (Bullseye)
 - Debian 12 (Bookworm)
 - Debian 13 (Trixie)
 - Ubuntu 22.04 LTS
@@ -50,10 +49,10 @@ Note:
 ### defaults/main.yml
 <pre><code>
 # Citrix Workspace App version
-citrix_version: "26.01.0.150"
+citrix_version: latest
 
 # Define location that holds the packages
-citrix_package_path: files
+citrix_package_path: files/citrix
 
 # Install USB support
 citrix_usb_support: false
@@ -71,10 +70,16 @@ citrix_usb_package_filename: "ctxusb_{{ citrix_version }}_amd64.deb"
 ### defaults/family-RedHat.yml
 <pre><code>
 # Main package name
-citrix_package_filename: "ICAClient-rhel-{{ citrix_version }}-1.x86_64.rpm"
+citrix_package_filename: "ICAClient-rhel-{{ citrix_version }}-0.x86_64.rpm"
 
 # USB package name
 citrix_usb_package_filename: "ctxusb-{{ citrix_version }}-1.x86_64.rpm"
+</pre></code>
+
+### defaults/Ubuntu-24.yml
+<pre><code>
+citrix_dependencies:
+  - libasound2t64
 </pre></code>
 
 
